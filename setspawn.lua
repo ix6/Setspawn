@@ -1,7 +1,3 @@
--- setspawn script
--- lets players set their own spawn point with !sp or !setspawn in chat
--- doesnt save to file so it resets when server restarts, thats fine for now
-
 if SERVER then
 
 	-- store everyones spawn here, gets cleared on restart
@@ -16,14 +12,13 @@ if SERVER then
 			local pos = ply:GetPos()
 			local ang = ply:EyeAngles()
 
-			-- dont want roll messing things up so just zero it
 			local a = Angle(ang.p, ang.y, 0)
 
 			spawns[ply:SteamID()] = {pos = pos, ang = a}
 
 			ply:ChatPrint("Setspawn set.")
 
-			return ""  -- hides the message from chat
+			return "" 
 		end
 
 	end)
@@ -33,7 +28,7 @@ if SERVER then
 		local data = spawns[ply:SteamID()]
 		if not data then return end
 
-		-- small delay otherwise the game overrides the position
+		-- small delay 
 		timer.Simple(0, function()
 			if IsValid(ply) then
 				ply:SetPos(data.pos)
